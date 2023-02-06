@@ -1,4 +1,4 @@
-% modified from:
+% modified from (6 feb 2:52pm):
 % SPhdThesis v1.0
 % By Saurabh Garg (saurabhgarg@mysoc.net)
 % Version 1.0 released 11.06.2013
