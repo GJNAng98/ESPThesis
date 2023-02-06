@@ -278,12 +278,14 @@
 
 
 % -----------------------------------------------------------------------
-% T O C    L O F    L O T    L O A
+% T O C    L O F    L O T    L O A    L O N
 % 
 % Change the appearance of toc, lof, lot, etc.
 
 % Using tocloft, the toc can be formatted easily.
 \RequirePackage[titles, subfigure]{tocloft}
+% For nomenclature
+\RequirePackage{nomencl}
 
 % Remove dots.
 \renewcommand{\cftdotsep}{\cftnodots}
@@ -323,7 +325,13 @@
 	\listofalgorithmes % Note an extra e, it is required because we use algorithm2e.
 	\SgIntClearDoublePage
 }
-
+\newcommand{\SgAddNom}{%
+    \newpage
+    \phantomsection % Requires hyperref; this is to fix the link.
+    \addcontentsline{nomencl}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Abbreviations and Symbols}}
+    \printnomenclature
+    \SgIntClearDoublePage
+}
 
 
 % -------------------------------------------------------------------------------------
