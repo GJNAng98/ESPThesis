@@ -1,10 +1,10 @@
-
+% modified from:
 % SPhdThesis v1.0
 % By Saurabh Garg (saurabhgarg@mysoc.net)
 % Version 1.0 released 11.06.2013
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{SPhdThesis}[2013/06/11 v1.0 SPhdThesis class]
+\ProvidesClass{ESPThesis}[2023/06/11 v1.0 ESPThesis class]
 
 \RequirePackage{xkeyval}
 
@@ -12,58 +12,58 @@
 % Define option for formatting for [screen] and print.
 % When formatting for screen colors are used for links, tables, and algorithms.
 % When formatting for print black color is used for links, tables, and algorithms.
-\define@choicekey*[Sg]{PhDThesis}{media}{screen,print}[screen]{\def \SgIntMedia{#1}}
-\setkeys[Sg]{PhDThesis}{media}
+\define@choicekey*[Sg]{ESPThesis}{media}{screen,print}[screen]{\def \SgIntMedia{#1}}
+\setkeys[Sg]{ESPThesis}{media}
 
 % -----------------------------------------------------------------------------
 % Define option for formatting title page in lower or [upper] case.
-\define@choicekey*[Sg]{PhDThesis}{titlecase}{upper,lower}[upper]{\def \SgIntTitleCase{#1}}
-\setkeys[Sg]{PhDThesis}{titlecase}
+\define@choicekey*[Sg]{ESPThesis}{titlecase}{upper,lower}[upper]{\def \SgIntTitleCase{#1}}
+\setkeys[Sg]{ESPThesis}{titlecase}
 
 % -----------------------------------------------------------------------------
 % Define line spacing. The valid values are [onehalf] and double.
 % Note that before using \SgLineSpacing setspace package must be loaded.
-\define@choicekey*[Sg]{PhDThesis}{linespacing}[\val\nr]{onehalf,double}[onehalf]{%
+\define@choicekey*[Sg]{ESPThesis}{linespacing}[\val\nr]{onehalf,double}[onehalf]{%
 	\ifcase\nr\relax
 		\def \SgIntLineSpacing{\onehalfspacing}
 	\or
 		\def \SgIntLineSpacing{\doublespacing}
 	\fi
 }
-\setkeys[Sg]{PhDThesis}{linespacing}
+\setkeys[Sg]{ESPThesis}{linespacing}
 
 % -----------------------------------------------------------------------------
 % Define font size. The valid values are [11pt] and 12pt.
-\define@choicekey*[Sg]{PhDThesis}{fontsize}{11pt,12pt}[11pt]{\def \SgIntFontSize{#1}}
-\setkeys[Sg]{PhDThesis}{fontsize}
+\define@choicekey*[Sg]{ESPThesis}{fontsize}{11pt,12pt}[11pt]{\def \SgIntFontSize{#1}}
+\setkeys[Sg]{ESPThesis}{fontsize}
 
 % -----------------------------------------------------------------------------
 % Define font family to be used. Default is cm.
-\define@choicekey*[Sg]{PhDThesis}{font}{cm,times,helvet,palatino}[cm]{\def \SgIntFont{#1}}
-\setkeys[Sg]{PhDThesis}{font}
+\define@choicekey*[Sg]{ESPThesis}{font}{cm,times,helvet,palatino}[cm]{\def \SgIntFont{#1}}
+\setkeys[Sg]{ESPThesis}{font}
 
 % -----------------------------------------------------------------------------
 % Define open. The valid values are right and [any].
 % Right makes chapters and entries in frontmatter begin  only on right hand pages 
 % or on the next page available. Any puts them on the next available page.
-\define@choicekey*[Sg]{PhDThesis}{open}[\val\nr]{right,any}[any]{%
+\define@choicekey*[Sg]{ESPThesis}{open}[\val\nr]{right,any}[any]{%
 	\ifcase\nr\relax
 		\def \SgIntOpen {openright}
 	\or
 		\def \SgIntOpen {openany}
 	\fi
 }
-\setkeys[Sg]{PhDThesis}{open}
+\setkeys[Sg]{ESPThesis}{open}
 
 % -----------------------------------------------------------------------------
 % Define pageside. The valid values are oneside and [twoside].
 % Specifies whether double or single sided output should be generated.
-\define@choicekey*[Sg]{PhDThesis}{pageside}{oneside,twoside}[twoside]{\def \SgIntPageSide{#1}}
-\setkeys[Sg]{PhDThesis}{pageside}
+\define@choicekey*[Sg]{ESPThesis}{pageside}{oneside,twoside}[twoside]{\def \SgIntPageSide{#1}}
+\setkeys[Sg]{ESPThesis}{pageside}
 
 
 % Process all options defined above with default values.
-\ProcessOptionsX[Sg]<PhDThesis>
+\ProcessOptionsX[Sg]<ESPThesis>
 
 % Finally load the report class.
 \LoadClass[a4paper, \SgIntFontSize, \SgIntOpen, \SgIntPageSide]{report}
@@ -112,11 +112,14 @@
 % Include important packages.
 
 \RequirePackage{graphicx, subfig}                     % Figures.
-\RequirePackage{amsmath, amssymb, amsthm}             % Math symbols and fonts.
+\RequirePackage{amsmath, amssymb, amsthm, amsfonts}             % Math symbols and fonts.
 \RequirePackage{float}                                % Must be done before hyperref.
 \RequirePackage[usenames,dvipsnames,hyperref]{xcolor} % For defining colors.
 \RequirePackage{ifthen}                               % For comparison.
-
+\RequirePackage{cite}
+\RequirePackage{algorithmic}
+\RequirePackage{textcomp}
+\RequirePackage{xcolor}
 
 
 % -----------------------------------------------------------------------
@@ -502,7 +505,7 @@
 		\large{\emph{\SgIntAuthorDegrees}} \\
 		\vspace{2.5in}
 
-		\large{\SgIntMakeUpperCase{A Thesis Submitted for the Degree of \SgIntDegree}}
+		\large{\SgIntMakeUpperCase{A Thesis Submitted \\ for the Degree of \SgIntDegree}}
 		\vspace{0.2in}
 
 		\large{\SgIntMakeUpperCase{\SgIntDepartment}} \\
