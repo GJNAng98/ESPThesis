@@ -1,10 +1,10 @@
-
+% modified from:
 % SPhdThesis v1.0
 % By Saurabh Garg (saurabhgarg@mysoc.net)
 % Version 1.0 released 11.06.2013
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{SPhdThesis}[2013/06/11 v1.0 SPhdThesis class]
+\ProvidesClass{ESPThesis}[2023/06/11 v1.0 ESPThesis class]
 
 \RequirePackage{xkeyval}
 
@@ -12,58 +12,58 @@
 % Define option for formatting for [screen] and print.
 % When formatting for screen colors are used for links, tables, and algorithms.
 % When formatting for print black color is used for links, tables, and algorithms.
-\define@choicekey*[Sg]{PhDThesis}{media}{screen,print}[screen]{\def \SgIntMedia{#1}}
-\setkeys[Sg]{PhDThesis}{media}
+\define@choicekey*[Sg]{ESPThesis}{media}{screen,print}[screen]{\def \SgIntMedia{#1}}
+\setkeys[Sg]{ESPThesis}{media}
 
 % -----------------------------------------------------------------------------
 % Define option for formatting title page in lower or [upper] case.
-\define@choicekey*[Sg]{PhDThesis}{titlecase}{upper,lower}[upper]{\def \SgIntTitleCase{#1}}
-\setkeys[Sg]{PhDThesis}{titlecase}
+\define@choicekey*[Sg]{ESPThesis}{titlecase}{upper,lower}[upper]{\def \SgIntTitleCase{#1}}
+\setkeys[Sg]{ESPThesis}{titlecase}
 
 % -----------------------------------------------------------------------------
 % Define line spacing. The valid values are [onehalf] and double.
 % Note that before using \SgLineSpacing setspace package must be loaded.
-\define@choicekey*[Sg]{PhDThesis}{linespacing}[\val\nr]{onehalf,double}[onehalf]{%
+\define@choicekey*[Sg]{ESPThesis}{linespacing}[\val\nr]{onehalf,double}[onehalf]{%
 	\ifcase\nr\relax
 		\def \SgIntLineSpacing{\onehalfspacing}
 	\or
 		\def \SgIntLineSpacing{\doublespacing}
 	\fi
 }
-\setkeys[Sg]{PhDThesis}{linespacing}
+\setkeys[Sg]{ESPThesis}{linespacing}
 
 % -----------------------------------------------------------------------------
 % Define font size. The valid values are [11pt] and 12pt.
-\define@choicekey*[Sg]{PhDThesis}{fontsize}{11pt,12pt}[11pt]{\def \SgIntFontSize{#1}}
-\setkeys[Sg]{PhDThesis}{fontsize}
+\define@choicekey*[Sg]{ESPThesis}{fontsize}{11pt,12pt}[11pt]{\def \SgIntFontSize{#1}}
+\setkeys[Sg]{ESPThesis}{fontsize}
 
 % -----------------------------------------------------------------------------
 % Define font family to be used. Default is cm.
-\define@choicekey*[Sg]{PhDThesis}{font}{cm,times,helvet,palatino}[cm]{\def \SgIntFont{#1}}
-\setkeys[Sg]{PhDThesis}{font}
+\define@choicekey*[Sg]{ESPThesis}{font}{cm,times,helvet,palatino}[cm]{\def \SgIntFont{#1}}
+\setkeys[Sg]{ESPThesis}{font}
 
 % -----------------------------------------------------------------------------
 % Define open. The valid values are right and [any].
 % Right makes chapters and entries in frontmatter begin  only on right hand pages 
 % or on the next page available. Any puts them on the next available page.
-\define@choicekey*[Sg]{PhDThesis}{open}[\val\nr]{right,any}[any]{%
+\define@choicekey*[Sg]{ESPThesis}{open}[\val\nr]{right,any}[any]{%
 	\ifcase\nr\relax
 		\def \SgIntOpen {openright}
 	\or
 		\def \SgIntOpen {openany}
 	\fi
 }
-\setkeys[Sg]{PhDThesis}{open}
+\setkeys[Sg]{ESPThesis}{open}
 
 % -----------------------------------------------------------------------------
 % Define pageside. The valid values are oneside and [twoside].
 % Specifies whether double or single sided output should be generated.
-\define@choicekey*[Sg]{PhDThesis}{pageside}{oneside,twoside}[twoside]{\def \SgIntPageSide{#1}}
-\setkeys[Sg]{PhDThesis}{pageside}
+\define@choicekey*[Sg]{ESPThesis}{pageside}{oneside,twoside}[twoside]{\def \SgIntPageSide{#1}}
+\setkeys[Sg]{ESPThesis}{pageside}
 
 
 % Process all options defined above with default values.
-\ProcessOptionsX[Sg]<PhDThesis>
+\ProcessOptionsX[Sg]<ESPThesis>
 
 % Finally load the report class.
 \LoadClass[a4paper, \SgIntFontSize, \SgIntOpen, \SgIntPageSide]{report}
@@ -95,6 +95,7 @@
 
 
 
+
 % -----------------------------------------------------------------------------
 % C A P T I O N S
 % 
@@ -112,12 +113,17 @@
 % Include important packages.
 
 \RequirePackage{graphicx, subfig}                     % Figures.
-\RequirePackage{amsmath, amssymb, amsthm}             % Math symbols and fonts.
+\RequirePackage{amsmath, amssymb, amsthm, amsfonts}             % Math symbols and fonts.
 \RequirePackage{float}                                % Must be done before hyperref.
 \RequirePackage[usenames,dvipsnames,hyperref]{xcolor} % For defining colors.
 \RequirePackage{ifthen}                               % For comparison.
+\RequirePackage{cite}
+\RequirePackage{algorithmic}
+\RequirePackage{textcomp}
+\RequirePackage{xcolor}
 
-
+% For nomenclature
+\RequirePackage{nomencl}
 
 % -----------------------------------------------------------------------
 % P A G E   L A Y O U T.
@@ -167,7 +173,28 @@
 % Define horizontal spacing between subfigures.
 \newcommand{\SgIntHSpaceBetweenSubfloats}{\hspace{0.5cm}}
 
+% -----------------------------------------------------------------------
+% NOMENCLATURE.
+\makenomenclature
+    
+%% This code creates the groups
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{P}{Physics constants}{%
+  \ifstrequal{#1}{N}{Number sets}{%
+  \ifstrequal{#1}{O}{Other symbols}{}}}%
+  ]}
 
+\nomenclature[P]{\(c\)}{Speed of light in a vacuum}
+\nomenclature[P]{\(h\)}{Planck constant}
+\nomenclature[P]{\(G\)}{Gravitational constant}
+\nomenclature[N]{\(\mathbb{R}\)}{Real numbers}
+\nomenclature[N]{\(\mathbb{C}\)}{Complex numbers}
+\nomenclature[N]{\(\mathbb{H}\)}{Quaternions}
+\nomenclature[O]{\(V\)}{Constant volume}
+\nomenclature[O]{\(\rho\)}{Friction index}
+\printnomenclature
 
 % -----------------------------------------------------------------------
 % T A B L E
@@ -228,7 +255,7 @@
 	\clearpage                                 % Fix the page number in TOC.
 	\phantomsection                            % Fix the link in PDF.
 	\addcontentsline{toc}{chapter}{References} % Add the bibliography to TOC.
-	\bibliographystyle{alpha}                  % Set the bibliography style.
+	\bibliographystyle{ieeetr}                  % Set the bibliography style.
 	\bibliography{#1}                          % Include the bibliography file.
 }
 
@@ -286,7 +313,7 @@
 \renewcommand{\cftdotsep}{\cftnodots}
 
 % Remove dots from list of algorithms.
-% This is necessary because we use algorithm2e which mananges its own list of algorithms.
+% This is necessary because we use algorithm2e which manages its own list of algorithms.
 \makeatletter
 	\renewcommand{\@dotsep}{5000}
 \makeatother
@@ -320,7 +347,13 @@
 	\listofalgorithmes % Note an extra e, it is required because we use algorithm2e.
 	\SgIntClearDoublePage
 }
-
+\newcommand{\SgAddNom}{%
+    \newpage
+    \phantomsection % Requires hyperref; this is to fix the link.
+    \addcontentsline{nomencl}{section}{\numberline{}\hspace{-.35in}{\SgIntTocSectionFormat{}List of Abbreviations and Symbols}}
+    \printnomenclature
+    \SgIntClearDoublePage
+}
 
 
 % -------------------------------------------------------------------------------------
@@ -377,8 +410,6 @@
 		}
 	}
 \makeatother
-
-
 
 % -----------------------------------------------------------------------
 % H Y P E R E F
@@ -452,8 +483,6 @@
 \newcommand{\SgSetUniversity}[1]{\renewcommand{\SgIntUniversity}{#1}}
 \newcommand{\SgSetDeclarationDate}[1]{\renewcommand{\SgIntDeclarationDate}{#1}}
 
-
-
 % -----------------------------------------------------------------------
 % C L E V E R E F
 % 
@@ -502,7 +531,7 @@
 		\large{\emph{\SgIntAuthorDegrees}} \\
 		\vspace{2.5in}
 
-		\large{\SgIntMakeUpperCase{A Thesis Submitted for the Degree of \SgIntDegree}}
+		\large{\SgIntMakeUpperCase{A Thesis Submitted \\ for the Degree of \SgIntDegree}}
 		\vspace{0.2in}
 
 		\large{\SgIntMakeUpperCase{\SgIntDepartment}} \\
